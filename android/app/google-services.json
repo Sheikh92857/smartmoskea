@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "130161200394",
+    "firebase_url": "https://smartmoskea-4096e.firebaseio.com",
+    "project_id": "smartmoskea-4096e",
+    "storage_bucket": "smartmoskea-4096e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130161200394:android:81234237dce250b236fef3",
+        "android_client_info": {
+          "package_name": "com.smartmoskea.smart_moskea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130161200394-ejv4b0j0g08ll0cnhtbc75g21qh75laf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartmoskea.smart_moskea",
+            "certificate_hash": "b08f4e20afb16239ce189d2a8c0e1c15fd3379f9"
+          }
+        },
+        {
+          "client_id": "130161200394-1p52n488glcb6d7sq54j7hqc8bsijrp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU6FtoHgSuIZXpklYNTh85TE1QGY31G2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130161200394-1p52n488glcb6d7sq54j7hqc8bsijrp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
