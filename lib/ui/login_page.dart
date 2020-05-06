@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage>
 
   Future uploadImage(BuildContext context) async{
     String filename = basename(_image.path);
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('Certificate');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     setState(() {
@@ -97,7 +97,17 @@ class _LoginPageState extends State<LoginPage>
     });
   }
 
-  
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+getCurrentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    final uid = user.uid;
+    // Similarly we can get email as well
+    //final uemail = user.email;
+    print("user id is" + uid);
+    //print(uemail);
+  }
+
 
   Widget commette_feild() {
     return  Visibility(
@@ -178,7 +188,7 @@ void showImamWidget(){
     });
   }
 
- 
+
   final DatabaseReference database = FirebaseDatabase.instance.reference().child("users");
 
   sendData()  {
@@ -359,16 +369,15 @@ String validateSignupPassword(String value)
 }
 
 
-signIn() async{
+// signIn() async{
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: loginEmailController.text, password:loginPasswordController.text).then((user){
-       //Navigator.of(context).pushReplacementNamed('/homepage');
-         print('signed in with phone number successful: user -> $user');
-    }).catchError((e){
-       print("error in signing in");
-    });
-  }
-
+//       await FirebaseAuth.instance.signInWithEmailAndPassword(email: loginEmailController.text, password:loginPasswordController.text).then((user){
+//        //Navigator.of(context).pushReplacementNamed('/homepage');
+//          print('signed in with phone number successful: user -> $user');
+//     }).catchError((e){
+//        print("error in signing in");
+//     });
+//   }
 
       Future<String> getPhoneNumber() async {
         String result = (await FirebaseDatabase.instance.reference().child("users/phonenumber").once()).value;
@@ -604,9 +613,8 @@ signIn() async{
                         ),
                       ),
                       onPressed: ()  {
-                        //signIn();
-                      getdata();
-                          
+                        getdata();
+                        
                       }  
                 )),
               ],
@@ -909,6 +917,7 @@ signIn() async{
                               verifyPhoneNumber(phoneNumber);
                               sendData();
                               uploadImage(context);
+                              getCurrentUser();
                               
                           }
                         });

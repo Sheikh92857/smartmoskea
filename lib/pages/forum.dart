@@ -3,8 +3,8 @@ import 'package:smart_moskea/pages/answered.dart';
 import 'package:smart_moskea/pages/like_questions.dart';
 import 'package:smart_moskea/pages/your_questions.dart';
 import 'package:smart_moskea/pages/messages.dart';
-
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class forum extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ Widget callPage(int index)
 {
   switch(index)
   {
-    case 0: return messages();
+    case 0: return messages('title',userId: 'userId', onSignedOut: () {},);
     case 1: return answered();
     case 2: return your_questions();
     case 3: return like_questions();
@@ -79,6 +79,3 @@ Widget callPage(int index)
               ]);
   }
 }
-
-
-
