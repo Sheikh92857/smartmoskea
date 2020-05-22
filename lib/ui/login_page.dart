@@ -10,11 +10,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smart_moskea/pages/BeforeLoggedInMainScreen.dart';
 import 'package:smart_moskea/pages/loggedInMainScreen.dart';
 import 'package:smart_moskea/style/theme.dart' as Theme;
 import 'package:smart_moskea/utils/bubble_indication_painter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_moskea/requests/authServices.dart';
+import 'package:smart_moskea/pages/qibla_direction.dart';
+
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -98,15 +101,25 @@ class _LoginPageState extends State<LoginPage>
   }
 
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
-getCurrentUser() async {
-    final FirebaseUser user = await _auth.currentUser();
-    final uid = user.uid;
-    // Similarly we can get email as well
-    //final uemail = user.email;
-    print("user id is" + uid);
-    //print(uemail);
-  }
+// getCurrentUser() async {
+//     final FirebaseUser user = await _auth.currentUser();
+//     final uid = user.uid;
+//     // Similarly we can get email as well
+//     //final uemail = user.email;
+//     if(uid == null)
+//     {
+//     print("user id is" + uid);
+//     }
+//     else{
+//       print("error");
+//     }
+//     //print(uemail);
+//   }
+
+// Future<String> currentUser() async {
+// FirebaseUser user = await _auth.currentUser();
+// return user.uid;
+// }
 
 
   Widget commette_feild() {
@@ -189,28 +202,51 @@ void showImamWidget(){
   }
 
 
-  final DatabaseReference database = FirebaseDatabase.instance.reference().child("users");
+  // final DatabaseReference database = FirebaseDatabase.instance.reference().child("users");
 
-  sendData()  {
-    database.push().set({
+  
+  // sendData()  {
+  //   database.push().set({
+  //     'name' : signupNameController.text,
+  //     'phonenumber': signupPhoneController.text,
+  //     'catogery': SelectedRadio,
+  //     'password': signupConfirmPasswordController.text
+  //     });
+
+  
+  final databaseReference = Firestore.instance.collection("users");
+
+  sendData() async {
+ await databaseReference.document("1")
+ .setData({
       'name' : signupNameController.text,
       'phonenumber': signupPhoneController.text,
       'catogery': SelectedRadio,
-      'password': signupConfirmPasswordController.text
+      'password': signupConfirmPasswordController.text,
+  });
+
+  DocumentReference ref = await databaseReference
+      .add({
+      'name' : signupNameController.text,
+      'phonenumber': signupPhoneController.text,
+      'catogery': SelectedRadio,
+      'password': signupConfirmPasswordController.text,
       });
+  print(ref.documentID);
 
-
-
-
-  DBCrypt dBCrypt = DBCrypt();
-  const plainPwd = 'password';
-
-  String hasedPWD = dBCrypt.hashpw(plainPwd, dBCrypt.gensalt());
-  assert(dBCrypt.checkpw(plainPwd, hasedPWD), true);
-  String salt = dBCrypt.gensaltWithRounds(12);
-  hasedPWD = dBCrypt.hashpw(plainPwd, salt);
-  assert(dBCrypt.checkpw(plainPwd, hasedPWD), true);  
   }
+
+
+
+  // DBCrypt dBCrypt = DBCrypt();
+  // const plainPwd = 'password';
+
+  // String hasedPWD = dBCrypt.hashpw(plainPwd, dBCrypt.gensalt());
+  // assert(dBCrypt.checkpw(plainPwd, hasedPWD), true);
+  // String salt = dBCrypt.gensaltWithRounds(12);
+  // hasedPWD = dBCrypt.hashpw(plainPwd, salt);
+  // assert(dBCrypt.checkpw(plainPwd, hasedPWD), true);  
+  // }
 
 
   @override
@@ -379,31 +415,70 @@ String validateSignupPassword(String value)
 //     });
 //   }
 
-      Future<String> getPhoneNumber() async {
-        String result = (await FirebaseDatabase.instance.reference().child("users/phonenumber").once()).value;
-        print('number is '+ result);
-        return result;
-      }
+
+// getCurrentUser() async {
+//     final FirebaseUser user = await _auth.currentUser();
+//     final uid = user.uid;
+//     // Similarly we can get email as well
+//     //final uemail = user.email;
+//     print(uid);
+//     //print(uemail);
+//   }
+
+//       Future<String> getPhoneNumber() async {
+//         final result = (await FirebaseDatabase.instance.reference().child("users").child("uid").child("phonenumber").once()).value;
+//           print(result);
+//         return result;
+//       }
+
+//       Future<String> getPassword() async {
+//         final result = (await FirebaseDatabase.instance.reference().child("users").child("uid").child("password").once()).value;
+//         return result;
+//       }
+
+
+//   getdata() {
+//       if(loginEmailController.text==getPhoneNumber()){
+//         if(loginPasswordController.text==getPassword()){
+//           LoggedInMainScreen();
+//         }
+//         else {
+//           print('error logging in');
+//         }
+//       }
+// }
+
+// Future<String> getPhoneNO(String uid) async {
+//     DocumentSnapshot ds = await Firestore.instance.collection('users').document(uid).get();
+//     return ds.data['phonenumber'];
+//   }
+
+  
+// Future<String> getPWD(String uid) async {
+//     DocumentSnapshot ds = await Firestore.instance.collection('users').document(uid).get();
+//     return ds.data['password'];
+//   }
+
+//  void getDataPhoneNo() {
+//     databaseReference
+//         .getDocuments()
+//         .then((QuerySnapshot snapshot) {
+//       snapshot.documents.forEach((f) => print('${f.data}}'));
+//     });
+//   }
 
 
 
-      Future<String> getPassword() async {
-        String result = (await FirebaseDatabase.instance.reference().child("users/password").once()).value;
-        print('password is '+ result);
-        return result;
-      }
-
-
-  getdata() {
-      if(loginEmailController.text==getPhoneNumber()){
-        if(loginPasswordController.text==getPassword()){
-          LoggedInMainScreen();
-        }
-        else {
-          print('error');
-        }
-      }
-}
+// var user = FirebaseAuth.instance.currentUser();
+// void getphoneno(){
+//   databaseReference.where("name", isEqualTo:"hassan")
+//   .getDocuments()
+//   .then((value) {
+//     value.documents.forEach((result) { 
+//       print(result.data);
+//     });
+//   });
+// }
 
 
  
@@ -427,6 +502,72 @@ String validateSignupPassword(String value)
   //     duration: Duration(seconds: 3),
   //   ));
   // }
+ testCredentials(BuildContext context) async {
+   print('........inside test credentials ....');
+    final Firestore firestore = Firestore.instance;
+
+    firestore.collection('users').getDocuments().then((snapshot){
+
+      print('length: ${snapshot.documents.length}');
+
+      snapshot.documents.forEach((document){
+        String name = document['name'];
+
+
+        String phoneNumber = document['phonenumber'];
+        String password = document['password'];
+
+        if(phoneNumber==loginEmailController.text && password==loginPasswordController.text){
+          print('logged In');
+          Navigator.push(context, MaterialPageRoute(builder:(context)=> LoggedInMainScreen()));
+        }
+
+
+        print('$name -> $password');
+        print('$phoneNumber');
+    
+      });
+    });
+
+}
+
+
+
+allPhoneNO(BuildContext context) async {
+   print('........inside test credentials ....');
+    final Firestore firestore = Firestore.instance;
+
+    firestore.collection('users').getDocuments().then((snapshot){
+
+      print('length: ${snapshot.documents.length}');
+
+      snapshot.documents.forEach((document){
+        
+
+
+        String phoneNumber = document['phonenumber'];
+        
+
+        if(phoneNumber== signupPhoneController.text)
+        {
+          print('Alreaddy Exixsts');
+           Navigator.push(context, MaterialPageRoute(builder:(context)=> BeforeLoggedInMainScreen()));
+        }
+        else{
+          sendData();
+          print("else block");
+        }
+        print('$phoneNumber');
+    
+      });
+    });
+
+}
+
+
+
+
+
 
   Widget _buildMenuBar(BuildContext context) {
     return  Container(
@@ -613,8 +754,11 @@ String validateSignupPassword(String value)
                         ),
                       ),
                       onPressed: ()  {
-                        getdata();
+                        testCredentials(context);
                         
+                        
+                        //getDataPhoneNo();
+                        //getphoneno();
                       }  
                 )),
               ],
@@ -914,11 +1058,12 @@ String validateSignupPassword(String value)
                         setState(() {
                           if(_formKeySignUp.currentState.validate())
                           {
+                            allPhoneNO(context);
                               verifyPhoneNumber(phoneNumber);
-                              sendData();
-                              uploadImage(context);
-                              getCurrentUser();
+                            //   sendData();
                               
+                            //  uploadImage(context);
+                             
                           }
                         });
                       },
