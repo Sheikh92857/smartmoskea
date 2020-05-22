@@ -533,8 +533,10 @@ String validateSignupPassword(String value)
 
 
 
-allPhoneNO(BuildContext context) async {
+Future<Widget> allPhoneNO(BuildContext context) async {
    print('........inside test credentials ....');
+
+
     final Firestore firestore = Firestore.instance;
 
     firestore.collection('users').getDocuments().then((snapshot){
@@ -551,17 +553,18 @@ allPhoneNO(BuildContext context) async {
         if(phoneNumber== signupPhoneController.text)
         {
           print('Alreaddy Exixsts');
-           Navigator.push(context, MaterialPageRoute(builder:(context)=> BeforeLoggedInMainScreen()));
+           return BeforeLoggedInMainScreen();
         }
         else{
           sendData();
           print("else block");
         }
         print('$phoneNumber');
+        
     
       });
     });
-
+return null;
 }
 
 
@@ -1058,8 +1061,8 @@ allPhoneNO(BuildContext context) async {
                         setState(() {
                           if(_formKeySignUp.currentState.validate())
                           {
-                            allPhoneNO(context);
-                              verifyPhoneNumber(phoneNumber);
+                           allPhoneNO(context);
+                          verifyPhoneNumber(phoneNumber);
                             //   sendData();
                               
                             //  uploadImage(context);
