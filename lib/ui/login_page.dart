@@ -71,6 +71,8 @@ class _LoginPageState extends State<LoginPage>
 
   bool smsSent=false;
 
+  bool isExist = false;
+
 
 
   void open_camera()
@@ -533,7 +535,7 @@ String validateSignupPassword(String value)
 
 
 
-Future<Widget> allPhoneNO(BuildContext context) async {
+void allPhoneNO(BuildContext context) {
    print('........inside test credentials ....');
 
 
@@ -552,19 +554,22 @@ Future<Widget> allPhoneNO(BuildContext context) async {
 
         if(phoneNumber== signupPhoneController.text)
         {
+          Navigator.push(context, MaterialPageRoute(builder:(context)=> BeforeLoggedInMainScreen()));
           print('Alreaddy Exixsts');
-           return BeforeLoggedInMainScreen();
         }
         else{
+           verifyPhoneNumber(phoneNumber);
+      
           sendData();
-          print("else block");
+         
+          print("Not Exist");
+        
         }
-        print('$phoneNumber');
+        //print('$phoneNumber');
         
     
       });
     });
-return null;
 }
 
 
@@ -1061,10 +1066,10 @@ return null;
                         setState(() {
                           if(_formKeySignUp.currentState.validate())
                           {
+                            
                            allPhoneNO(context);
-                          verifyPhoneNumber(phoneNumber);
                             //   sendData();
-                              
+                              verifyPhoneNumber(phoneNumber);
                             //  uploadImage(context);
                              
                           }

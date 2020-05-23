@@ -3,6 +3,7 @@ import 'package:smart_moskea/requests/authServices.dart';
 import 'qibla_direction.dart';
 import 'map.dart';
 import 'package:smart_moskea/ui/login_page.dart';
+import 'BeforeLoggedInMainScreen.dart';
 import 'package:smart_moskea/pages/notification.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:smart_moskea/pages/favorite.dart';
@@ -109,7 +110,8 @@ class _LoggedInMainScreenState extends State<LoggedInMainScreen> {
               trailing: new Icon(Icons.exit_to_app),
               title: new Text("Logout"),
               onTap: (){
-                //AuthServices().signOut();
+                AuthServices().signOut();
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> BeforeLoggedInMainScreen()));
               },
             ),
 

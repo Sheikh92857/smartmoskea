@@ -28,16 +28,17 @@ class AuthServices
       );    
   }
 
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
     Future<FirebaseUser> getUser() {
     return _auth.currentUser();
   }
 
-    Future logout() async {
-    var result = FirebaseAuth.instance.signOut();
+    Future logout(BuildContext context) async {
+   var result = FirebaseAuth.instance.signOut();
+
     return result;
+  
   }
 
   
